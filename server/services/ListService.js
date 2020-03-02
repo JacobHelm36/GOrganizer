@@ -33,8 +33,8 @@ class ListService {
     return data;
   }
 
-  async delete(id, userEmail) {
-    let data = await dbContext.List.findOneAndRemove({ _id: id, creatorEmail: userEmail });
+  async delete(id) {
+    let data = await dbContext.List.findOneAndRemove({ _id: id });
     if (!data) {
       throw new BadRequest("Invalid ID or you do not own this List");
     }

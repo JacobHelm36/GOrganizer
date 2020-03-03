@@ -26,6 +26,11 @@ class TasksService {
     return data
   }
 
+  async addComment(id, body) {
+    let data = await dbContext.Tasks.findOneAndUpdate({ _id: id }, { $addToSet: { comments: body } }, { new: true });
+    return (data);
+  }
+
   async edit(id, userEmail, update) {
     let data = await dbContext.Tasks.findOneAndUpdate({ _id: id, creatorEmail: userEmail }, update, { new: true })
     if (!data) {
@@ -42,6 +47,9 @@ class TasksService {
     return "Delorted!"
   }
 
+  async deleteComment(id, commentId) {
+    let data = await dbContext.Tasks.findOneAndUpdate({ _id: id }, { $pull: { comments: { _id: commentId } } }, { new: true });
+  }
 }
 
 

@@ -8,7 +8,11 @@ class DbContext {
   Values = mongoose.model("Value", ValueSchema);
   Profile = mongoose.model("Profile", ProfileSchema);
   Boards = mongoose.model("Board", BoardSchema);
+
+  Tasks = mongoose.model("Task", TaskSchema);
+
   List = mongoose.model("List", ListSchema)
+
 }
 
 export const dbContext = new DbContext();

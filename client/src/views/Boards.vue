@@ -1,14 +1,33 @@
 <template>
-  <div class="boards">
+  <div class="boards bg-secondary" id="boardsVue">
+    <div id="boardsVue">
     WELCOME TO THE BOARDS!!!
     <form @submit.prevent="addBoard">
       <input type="text" placeholder="title" v-model="newBoard.title" required>
       <input type="text" placeholder="description" v-model="newBoard.description">
       <button type="submit">Create Board</button>
     </form>
-    <div v-for="board in boards" :key="board._id">
-      <router-link :to="{name: 'board', params: {boardId: board._id}}">{{board.title}}</router-link>
-    </div>
+      <div v-for="board in boards" :key="board._id">
+        <div class="container-fluid">
+          <div class="col-6">
+            <div class="card mt-1" style="width:20%">
+              <router-link :to="{name: 'board', params: {boardId: board._id}}">
+                <h3 class="card-top">{{board.title}}</h3>
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <!-- <router-link :to="{ name:'PostDetails', params:{postId: this.postData._id}}">
+          <img class="card-img-top" :src="postData.imgUrl" alt="Card image cap" />
+        </router-link>
+        <div class="card-body">
+          <h5 class="card-title">{{postData.title}}</h5>
+          <p class="card-text">{{postData.description}}</p>
+        </div> -->
+
+  </div>
   </div>
 </template>
 
@@ -39,3 +58,11 @@
     }
   };
 </script>
+<style scoped>
+#boardsVue{
+  height: 100vh
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);}
+</style>

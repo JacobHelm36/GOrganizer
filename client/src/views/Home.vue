@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home bg-light" style="height:100vh">
     <h1>This is your home page.</h1>
   </div>
 </template>

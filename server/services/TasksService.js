@@ -3,8 +3,8 @@ import { BadRequest } from "../utils/Errors"
 
 
 class TasksService {
-  async getAll(userEmail) {
-    return await dbContext.Tasks.find({ creatorEmail: userEmail }).populate("creator", "List")
+  async getAll() {
+    return await dbContext.Tasks.find({});
   }
 
   async getById(id, userEmail) {
@@ -12,6 +12,12 @@ class TasksService {
     if (!data) {
       throw new BadRequest("Invalid ID or you do not own this board")
     }
+    return data
+  }
+
+  async getTasksByListId(id) {
+    let data = await dbContext.Tasks.find({ listId: id })
+    //throw new Error("Method not implemented.")
     return data
   }
 

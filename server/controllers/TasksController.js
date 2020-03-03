@@ -8,26 +8,18 @@ export class TasksController extends BaseController {
     super("api/tasks");
     this.router = express
       .Router()
-      .get("", this.getAll)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(auth0provider.isAuthorized)
       .post("", this.create)
       .put("/:id", this.edit)
       .delete("/:id", this.delete)
   }
-  async getAll(req, res, next) {
-    try {
-      let data = await tasksService.getAll(req.body.id);
-      return res.send(data)
-    } catch (error) {
-      next(error);
-    }
-  }
   async create(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
       req.body.creatorId = req.user.sub;
-      res.send(req.body);
+      let data = await tasksService.create(req.body);
+      return res.send(data);
     } catch (error) {
       next(error);
     }

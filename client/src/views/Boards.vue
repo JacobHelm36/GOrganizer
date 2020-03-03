@@ -14,6 +14,8 @@
               <router-link :to="{name: 'board', params: {boardId: board._id}}">
                 <h3 class="card-top">{{board.title}}</h3>
               </router-link>
+              <button class="btn btn-warning" @click="editBoard">Edit</button>
+              <button class="btn btn-danger" @click="deleteBoard">Delete</button>
             </div>
           </div>
         </div>
@@ -54,6 +56,10 @@
       addBoard() {
         this.$store.dispatch("addBoard", this.newBoard);
         this.newBoard = { title: "", description: "" };
+      },
+      editBoard() {
+        console.log(boardId)
+        this.$store.dispatch("editBoard", boardId);
       }
     }
   };

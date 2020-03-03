@@ -27,6 +27,9 @@ export default new Vuex.Store({
     },
     setBoards(state, boards) {
       state.boards = boards
+    },
+    setActiveBoard(state, activeBoard) {
+      state.activeBoard = activeBoard
     }
   },
   actions: {
@@ -49,6 +52,10 @@ export default new Vuex.Store({
 
 
     //#region -- BOARDS --
+    setActiveBoard({ commit, dispatch}, boardData) {
+      console.log(boardData)
+      commit("setActiveBoard", boardData)
+    },
     getBoards({ commit, dispatch }) {
       api.get('boards')
         .then(res => {

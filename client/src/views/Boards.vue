@@ -7,7 +7,7 @@
       <input type="text" placeholder="description" v-model="newBoard.description">
       <button type="submit">Create Board</button>
     </form>
-      <div v-for="board in boards" :key="board._id">
+      <div v-for="board in boards" :key="board._id" :boardData="board">
         <div class="container-fluid">
           <div class="col-6">
             <div class="card mt-1" style="width:20%">
@@ -46,9 +46,6 @@
         this.$store.dispatch("addBoard", this.newBoard);
         this.newBoard = { title: "", description: "" };
       },
-      setActiveBoard() {
-        this.$store.dispatch("setActiveBoard", this.board)
-      }
     }
   };
 </script>

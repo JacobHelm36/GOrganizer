@@ -1,6 +1,6 @@
 <template>
   <div class="board">
-    <h1 v-if="board.title">{{board.title}}</h1>
+    <h1 v-if="board">{{board.title}}</h1>
     <h1 v-else>Loading...</h1>
     <button>Delete</button>
   </div>
@@ -9,6 +9,11 @@
 // set active board here, get route params here
 export default {
   name: "board",
+  mounted() { {
+    console.log(this.$route.params.boardId)
+      this.$store.dispatch("setActiveBoard", this.$route.params.boardId)
+    }
+  },
   computed: {
     board() {
       //FIXME This does not work on page reload because the activeBoard is empty in the store
@@ -25,6 +30,7 @@ export default {
       this.$store.dispatch("editBoard", this.boardId);
     }
   },
-  props: ["boardId"]
+  props: []
+
 };
 </script>

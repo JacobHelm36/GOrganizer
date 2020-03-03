@@ -52,9 +52,10 @@ export default new Vuex.Store({
 
 
     //#region -- BOARDS --
-    setActiveBoard({ commit, dispatch}, boardData) {
-      console.log(boardData)
-      commit("setActiveBoard", boardData)
+
+    async setActiveBoard({ commit }, boardId){
+      let res = await api.get(`boards/${boardId}`)
+      commit("setActiveBoard", res.data)
     },
     getBoards({ commit, dispatch }) {
       api.get('boards')

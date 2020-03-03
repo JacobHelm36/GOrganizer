@@ -14,21 +14,22 @@ export class BoardsController extends BaseController {
       .use(auth0provider.getAuthorizedUserInfo)
       .get('', this.getAll)
       .get('/:id', this.getById)
-      .get('/:id/list', this.getListByBoardId)
+      .get('/:id/lists', this.getListByBoardId)
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
   }
 
- 
+
   async getAll(req, res, next) {
     try {
       //only gets boards by user who is logged in
       let data = await boardService.getAll(req.userInfo.email)
       return res.send(data)
     }
-    catch (err) { 
-      next(err) }
+    catch (err) {
+      next(err)
+    }
   }
 
   async getById(req, res, next) {
@@ -41,8 +42,9 @@ export class BoardsController extends BaseController {
   async getListByBoardId(req, res, next) {
     try {
       let data = await listService.getListByBoardId(req.params.id, req.userInfo.email)
+      return res.send(data);
     } catch (error) {
-      
+
     }
   }
 

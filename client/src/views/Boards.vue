@@ -12,7 +12,7 @@
           <div class="col-6">
             <div class="card mt-1" style="width:20%">
               <router-link :to="{name: 'board', params: {boardId: board._id}}">
-                <h3 class="card-top">{{board.title}}</h3>
+                <h3 class="card-top" @click="setActiveBoard">{{board.title}}</h3>
               </router-link>
             </div>
           </div>

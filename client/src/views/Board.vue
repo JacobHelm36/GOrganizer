@@ -6,6 +6,7 @@
   </div>
 </template>
 <script>
+// set active board here, get route params here
 export default {
   name: "board",
   mounted() { {
@@ -30,5 +31,6 @@ export default {
     }
   },
   props: []
+
 };
 </script>

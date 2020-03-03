@@ -4,12 +4,9 @@ import { BadRequest } from "../utils/Errors"
 
 class ListService {
   async getListByBoardId(id, email) {
-    let data = await dbContext.List.findById({ boardId : id})
+    let data = await dbContext.List.find({ boardId: id })
     //throw new Error("Method not implemented.")
     return data
-  }
-  async getAll(boardId) {
-    return await dbContext.List.find({ boardId: boardId }).populate("Board")
   }
 
   async getById(id) {

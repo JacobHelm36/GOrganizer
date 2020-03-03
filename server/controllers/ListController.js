@@ -8,10 +8,9 @@ import { listService } from '../services/ListService'
 //PUBLIC
 export class ListController extends BaseController {
   constructor() {
-    super("api/list")
+    super("api/lists")
     this.router = express.Router()
       .use(auth0provider.getAuthorizedUserInfo)
-      .get('', this.getAll)
       .get('/:id', this.getById)
       //.get("/:id/tasks" this.getTasksById)
       .post('', this.create)
@@ -19,16 +18,6 @@ export class ListController extends BaseController {
       .delete('/:id', this.delete)
   }
 
- 
-  async getAll(req, res, next) {
-    try {
-      //only gets list by user who is logged in
-      let data = await listService.getAll(req.body.boardId)
-      return res.send(data)
-    }
-    catch (err) { 
-      next(err) }
-  }
 
   async getById(req, res, next) {
     try {

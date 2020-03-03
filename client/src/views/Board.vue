@@ -14,6 +14,6 @@ export default {
       return this.$store.state.activeBoard;
     }
   },
-  props: ["boardId"]
+  props: ["boardData"]
 };
 </script>

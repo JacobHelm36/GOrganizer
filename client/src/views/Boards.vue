@@ -12,24 +12,13 @@
           <div class="col-6">
             <div class="card mt-1" style="width:20%">
               <router-link :to="{name: 'board', params: {boardId: board._id}}">
-                <h3 class="card-top">{{board.title}}</h3>
+                <h3 class="card-top" @click="setActiveBoard">{{board.title}}</h3>
               </router-link>
-              <button class="btn btn-warning" @click="editBoard">Edit</button>
-              <button class="btn btn-danger" @click="deleteBoard">Delete</button>
             </div>
           </div>
         </div>
       </div>
-
-        <!-- <router-link :to="{ name:'PostDetails', params:{postId: this.postData._id}}">
-          <img class="card-img-top" :src="postData.imgUrl" alt="Card image cap" />
-        </router-link>
-        <div class="card-body">
-          <h5 class="card-title">{{postData.title}}</h5>
-          <p class="card-text">{{postData.description}}</p>
-        </div> -->
-
-  </div>
+    </div>
   </div>
 </template>
 
@@ -57,9 +46,8 @@
         this.$store.dispatch("addBoard", this.newBoard);
         this.newBoard = { title: "", description: "" };
       },
-      editBoard() {
-        console.log(boardId)
-        this.$store.dispatch("editBoard", boardId);
+      setActiveBoard() {
+        this.$store.dispatch("setActiveBoard", this.board)
       }
     }
   };

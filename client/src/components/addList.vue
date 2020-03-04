@@ -1,19 +1,34 @@
 <template>
   <div class="component">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#list-creator">create list</button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#list-creator"
+    >create list</button>
     <div class="modal" tabindex="-1" role="dialog" id="list-creator" @submit.prevent="createList">
       <div class="modal-dialog" role="document">
-        <form action="">
-        <div class="modal-content form-group rounded input-group-default">
-          <div class="modal-header d-flex flex-column">
-            <h2>Title</h2>
-            <input class="modal-title rounded form-control" placeholder="What's next?" aria-describedby="inputGroup-sizing-default" v-model="newList.title"/>
+        <form action>
+          <div class="modal-content form-group rounded input-group-default">
+            <div class="modal-header d-flex flex-column">
+              <h2>Title</h2>
+              <input
+                class="modal-title rounded form-control"
+                placeholder="What's next?"
+                aria-describedby="inputGroup-sizing-default"
+                v-model="newList.title"
+              />
+            </div>
+            <div class="modal-footer">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#list-creator"
+              >Submit</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#list-creator">Submit</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
         </form>
       </div>
     </div>
@@ -22,38 +37,35 @@
 
 
 <script>
-import boardId from "../views/Board"
+import boardId from "../views/Board";
 export default {
-
-  name: 'AddList',
-  data(){
+  mounted() {
+    console.log(this.newList);
+  },
+  name: "AddList",
+  data() {
     return {
-      newList:{
-        boardId: "boardId"
+      newList: {
+        boardId: this.boardId
       }
+    };
+  },
+  computed: {},
+  methods: {
+    createList() {
+      this.$store.dispatch("createList", this.newList);
     }
   },
-  computed:{
-
-  },
-  methods:{
-    createList(){
-      this.$store.dispatch("createList", this.newList)
-    }
-  },
-  props: [
-    "boardId"
-  ],
-  components:{
-
-  }
-}
+  props: ["boardId"],
+  components: {}
+};
 </script>
 
 
 <style scoped>
-div.modal-content{
-  background-color: #F7F4F3;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+div.modal-content {
+  background-color: #f7f4f3;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 </style>

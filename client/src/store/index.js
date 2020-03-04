@@ -36,9 +36,14 @@ export default new Vuex.Store({
       state.activeBoard = boardEdit
     },
     setLists(state, lists) {
-      state.lists = lists;
+      state.lists = lists
     },
-    createList(state, lists) {
+    editLists(state, list) {
+      let oldList = state.lists.find(l => l._id == list.id);
+      console.log(oldList)
+      oldList = list
+    },
+    addList(state, lists) {
       state.lists.push(lists)
     },
     deleteList(state, listId) {
@@ -78,11 +83,11 @@ export default new Vuex.Store({
       let res = await api.get('boards')
       commit('setBoards', res.data)
     },
-    async editBoardById({commit, dispatch}, boardId){
+    async editBoardById({ commit, dispatch }, boardId) {
       let res = await api.put(`boards/${boardId}`)
       commit("editBoard", res.data)
     },
-    async deleteBoardById({ commit}, boardId) {
+    async deleteBoardById({ commit }, boardId) {
       let res = await api.delete(`boards/${boardId}`)
       router.push({ name: "boards" })
       return res
@@ -92,8 +97,9 @@ export default new Vuex.Store({
       commit('setLists', res.data)
     },
     async createList({ commit, dispatch }, newList) {
-      let res = await api.post(`/boards/${newList.boardId}`)
-      commit ("addList", newList)
+      let res = await api.post(`lists`, newList)
+      console.log(res)
+      commit("addList", newList)
     },
     async deleteList({ commit }, listId) {
       let res = await api.delete(`lists/${listId}`)
@@ -101,10 +107,12 @@ export default new Vuex.Store({
       return res
     },
     // check this action
-    async editListById({ commit }, listId) {
-      let res = await api.put(`lists/${listId}`)
-      let newList = await api.get(`/lists/${listId}`)
-      commit("setLists")
+    async editListById({ commit }, data) {
+      let update = {
+        title: data.title
+      }
+      let res = await api.put(`lists/${data.id}`, update)
+      commit("editLists", res.data)
     },
     async getTasks({ commit, dispatch }, listId) {
       let res = await api.get(`lists/${listId}/tasks`)

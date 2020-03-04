@@ -1,5 +1,5 @@
 <template>
-  <div class="boards bg-secondary" id="boardsVue">
+  <div class="boards bg-light" id="boardsVue">
     <div id="boardsVue">
       WELCOME TO THE BOARDS!!!
       <form @submit.prevent="addBoard">

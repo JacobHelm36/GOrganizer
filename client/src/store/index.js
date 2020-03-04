@@ -20,7 +20,7 @@ export default new Vuex.Store({
     boards: [],
     activeBoard: {},
     lists: [],
-    tasks: []
+    tasks: {}
   },
   mutations: {
     setUser(state, user) {
@@ -35,8 +35,8 @@ export default new Vuex.Store({
     setLists(state, lists) {
       state.lists = lists;
     },
-    setTasks(state, tasks) {
-      state.tasks = tasks;
+    setTasks(state, data) {
+      Vue.set(state.tasks, data.listId, data.resData);
     },
 
   },
@@ -73,20 +73,24 @@ export default new Vuex.Store({
       let res = await api.get(`boards/${boardId}/lists`)
       commit('setLists', res.data)
     },
-    async deleteList({commit}, listId){
+    async deleteList({ commit }, listId) {
       let res = await api.delete(`lists/${listId}`)
-      router.push({ name: "boards"})
+      router.push({ name: "boards" })
       return res
     },
     // check this action
-    async editListById({commit}, listId) {
+    async editListById({ commit }, listId) {
       let res = await api.put(`lists/${listId}`)
       let newList = await api.get(`/lists/${listId}`)
-      commit("setLists", )
+      commit("setLists")
     },
     async getTasks({ commit, dispatch }, listId) {
       let res = await api.get(`lists/${listId}/tasks`)
-      commit("setTasks", res.data)
+      let data = {
+        listId: listId,
+        resData: res.data
+      }
+      commit("setTasks", data)
     },
     addBoard({ commit, dispatch }, boardData) {
       api.post('boards', boardData)

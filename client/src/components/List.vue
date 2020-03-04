@@ -1,15 +1,12 @@
 <template>
   <!-- this is where tasks would show up 50% of the time -->
-  <div class="col-12 col-md-4 m-2">
-    <div class="card bg-primary text-white">
-      <h1 class="card-top">{{listData.title}}</h1>
-      <h3 class="mt-2">
-        Tasks:
-        <!-- @click="addList" -->
-      </h3>
+  <div class="m-2 list">
+    <div class="card bg-light py-3">
+      <strong class="card-top">{{listData.title}}</strong>
+      <br />
       <div class="row">
         <div class="col-12">
-          <task class="card-body" v-for="taskObj in tasks" :key="taskObj._id" :taskData="taskObj" />
+          <task v-for="taskObj in tasks" :key="taskObj._id" :taskData="taskObj" />
         </div>
       </div>
       <div class="row justify-content-center">
@@ -60,5 +57,11 @@ export default {
   display: inline-block;
   font-size: 12px;
   cursor: pointer;
+}
+.list {
+  width: 15rem;
+}
+.card {
+  border-radius: 3%;
 }
 </style>

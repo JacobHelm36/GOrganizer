@@ -7,10 +7,10 @@
         <input type="text" placeholder="description" v-model="newBoard.description" />
         <button type="submit">Create Board</button>
       </form>
-      <div v-for="board in boards" :key="board._id" :boardData="board">
-        <div class="container-fluid">
-          <div class="col-6">
-            <div class="card mt-1" style="width:20%">
+      <div class="row">
+        <div v-for="board in boards" :key="board._id" :boardData="board">
+          <div class="col">
+            <div class="card mt-1 ml-2" style="width:100%">
               <router-link :to="{name: 'board', params: {boardId: board._id}}">
                 <h3 class="card-top">{{board.title}}</h3>
               </router-link>

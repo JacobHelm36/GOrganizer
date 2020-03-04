@@ -1,12 +1,12 @@
 <template>
   <div class="board">
-    <h1 v-if="board">{{board.title}}</h1>
-    <h1 v-else>Loading...</h1>
+      <h1 v-if="board">{{board.title}}</h1>
+      <h1 v-else>Loading...</h1>
+      <button class="btn btn-success btn-sm btn-fixer">Add list</button>
     <!-- import lists -->
     <div class="row">
       <list v-for="listObj in lists" :key="listObj._id" :listData="listObj" />
     </div>
-    <button>Delete</button>
   </div>
 </template>
 <script>
@@ -22,7 +22,6 @@ export default {
   },
   computed: {
     board() {
-      //FIXME This does not work on page reload because the activeBoard is empty in the store
       return this.$store.state.activeBoard;
     },
     lists() {
@@ -45,3 +44,6 @@ export default {
   }
 };
 </script>
+<style>
+
+</style>

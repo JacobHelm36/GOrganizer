@@ -1,6 +1,6 @@
 <template>
   <div class="col-12">
-    <h1>{{taskData.title}}</h1>
+    <h2 class="bg-info">{{taskData.title}}</h2>
   </div>
 </template>
 

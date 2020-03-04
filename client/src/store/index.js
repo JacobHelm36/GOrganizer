@@ -37,7 +37,8 @@ export default new Vuex.Store({
     },
     setTasks(state, tasks) {
       state.tasks = tasks;
-    }
+    },
+
   },
   actions: {
     //#region -- AUTH STUFF --
@@ -71,6 +72,17 @@ export default new Vuex.Store({
     async getLists({ commit, dispatch }, boardId) {
       let res = await api.get(`boards/${boardId}/lists`)
       commit('setLists', res.data)
+    },
+    async deleteList({commit}, listId){
+      let res = await api.delete(`lists/${listId}`)
+      router.push({ name: "boards"})
+      return res
+    },
+    // check this action
+    async editListById({commit}, listId) {
+      let res = await api.put(`lists/${listId}`)
+      let newList = await api.get(`/lists/${listId}`)
+      commit("setLists", )
     },
     async getTasks({ commit, dispatch }, listId) {
       let res = await api.get(`lists/${listId}/tasks`)

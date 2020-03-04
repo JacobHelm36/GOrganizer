@@ -38,6 +38,12 @@ export default new Vuex.Store({
     setLists(state, lists) {
       state.lists = lists;
     },
+    createList(state, lists) {
+      state.lists.push(lists)
+    },
+    deleteList(state, listId) {
+      state.lists = state.lists.filter(el => el._id != listId)
+    },
     setTasks(state, data) {
       Vue.set(state.tasks, data.listId, data.resData);
     },
@@ -85,8 +91,13 @@ export default new Vuex.Store({
       let res = await api.get(`boards/${boardId}/lists`)
       commit('setLists', res.data)
     },
+    async createList({ commit, dispatch }, newList) {
+      let res = await api.post(`/boards/${newList.boardId}`)
+      commit ("addList", newList)
+    },
     async deleteList({ commit }, listId) {
       let res = await api.delete(`lists/${listId}`)
+      commit("deleteList", listId)
       return res
     },
     // check this action

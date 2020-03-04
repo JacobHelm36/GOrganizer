@@ -13,7 +13,7 @@
         </div>
         </span></h1>
       <h1 v-else>Loading...</h1>
-      <button class="btn btn-success btn-sm btn-fixer">Add list</button>
+      <add-list :boardId="this.$route.params.boardId"/>
     <!-- import lists -->
     <div class="lists">
       <list v-for="listObj in lists" :key="listObj._id" :listData="listObj" />
@@ -23,6 +23,7 @@
 <script>
 // set active board here, get route params here
 import List from "../components/List";
+import addList from "../components/addList"
 export default {
   name: "board",
   mounted() {
@@ -49,7 +50,8 @@ export default {
   },
   props: [],
   components: {
-    List
+    List,
+    addList
   }
 };
 </script>

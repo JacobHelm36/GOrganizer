@@ -14,13 +14,12 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-12">
-          <button class="btn btn-danger btn-fixer">Delete List</button>
+          <button class="btn btn-danger btn-fixer" @click="deleteList">Delete List</button>
           <button class="btn btn-warning btn-fixer">Edit List</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- the delete button functionality @click="deleteList" -->
   <!-- the edit button functionality @click="editList" -->
 </template>
 
@@ -34,7 +33,8 @@ export default {
   computed: {
     tasks() {
       return this.$store.state.tasks[this.listData._id];
-    }
+    },
+    
   },
   props: ["listData"],
   components: {

@@ -1,6 +1,17 @@
 <template>
   <div class="board">
-      <h1 v-if="board">{{board.title}}</h1>
+      <h1 v-if="board">{{board.title}}<span>
+        <div class="dropdown">
+        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Options
+        </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#"></a>
+            <a class="dropdown-item">Edit Board</a>
+            <a class="dropdown-item" @click="deleteBoard">Delete Board</a>
+          </div>
+        </div>
+        </span></h1>
       <h1 v-else>Loading...</h1>
       <button class="btn btn-success btn-sm btn-fixer">Add list</button>
     <!-- import lists -->
@@ -30,12 +41,10 @@ export default {
   },
   methods: {
     deleteBoard() {
-      console.log(req.params.boardId);
-      this.$store.dispatch("deleteBoardById", req.params.boardId);
+      this.$store.dispatch("deleteBoardById", this.$route.params.boardId);
     },
     editBoard() {
-      console.log(this.boards.id);
-      this.$store.dispatch("editBoard", this.boardId);
+      this.$store.dispatch("editBoardById", this.$route.params.boardId);
     }
   },
   props: [],

@@ -15,7 +15,7 @@
       <h1 v-else>Loading...</h1>
       <button class="btn btn-success btn-sm btn-fixer">Add list</button>
     <!-- import lists -->
-    <div class="row">
+    <div class="lists">
       <list v-for="listObj in lists" :key="listObj._id" :listData="listObj" />
     </div>
   </div>
@@ -54,5 +54,9 @@ export default {
 };
 </script>
 <style>
-
+.lists {
+  display: flex;
+  overflow-x: scroll;
+  flex-direction: row;
+}
 </style>

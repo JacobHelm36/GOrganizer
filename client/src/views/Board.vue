@@ -16,8 +16,8 @@ export default {
   name: "board",
   mounted() {
     {
-      this.$store.dispatch("setActiveBoard", this.$route.params.boardId);
       this.$store.dispatch("getLists", this.$route.params.boardId);
+      this.$store.dispatch("setActiveBoard", this.$route.params.boardId);
     }
   },
   computed: {

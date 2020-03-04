@@ -10,7 +10,6 @@ import Task from "./Task";
 export default {
   mounted() {
     this.$store.dispatch("getTasks", this.listData._id);
-    console.log(this.$store.state.tasks);
   },
   computed: {
     tasks() {

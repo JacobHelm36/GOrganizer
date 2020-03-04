@@ -32,6 +32,9 @@ export default new Vuex.Store({
     setActiveBoard(state, activeBoard) {
       state.activeBoard = activeBoard
     },
+    editBoard(state, boardEdit) {
+      state.activeBoard = boardEdit
+    },
     setLists(state, lists) {
       state.lists = lists;
     },
@@ -69,13 +72,21 @@ export default new Vuex.Store({
       let res = await api.get('boards')
       commit('setBoards', res.data)
     },
+    async editBoardById({commit, dispatch}, boardId){
+      let res = await api.put(`boards/${boardId}`)
+      commit("editBoard", res.data)
+    },
+    async deleteBoardById({ commit}, boardId) {
+      let res = await api.delete(`boards/${boardId}`)
+      router.push({ name: "boards" })
+      return res
+    },
     async getLists({ commit, dispatch }, boardId) {
       let res = await api.get(`boards/${boardId}/lists`)
       commit('setLists', res.data)
     },
     async deleteList({ commit }, listId) {
       let res = await api.delete(`lists/${listId}`)
-      router.push({ name: "boards" })
       return res
     },
     // check this action

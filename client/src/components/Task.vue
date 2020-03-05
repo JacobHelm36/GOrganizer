@@ -21,13 +21,18 @@
 
 <script>
 export default {
+  name: "Task",
   props: ["taskData"],
   methods: {
     toggleComments() {
       this.showComments = !this.showComments;
     },
     removeTask() {
-      this.$store.state.dispatch("");
+      let data = {
+        listId: this.taskData.listId,
+        id: this.taskData._id
+      };
+      this.$store.dispatch("deleteTask", data);
     }
   },
   data() {

@@ -9,7 +9,7 @@ export class TasksController extends BaseController {
     this.router = express
       .Router()
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
-      .use(auth0provider.isAuthorized)
+      .use(auth0provider.getAuthorizedUserInfo)
       .post("", this.create)
       .post("/:id/comment", this.addComment)
       .put("/:id", this.edit)
@@ -20,6 +20,7 @@ export class TasksController extends BaseController {
   async create(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
+      req.body.creatorEmail = req.userInfo.email;
       req.body.creatorId = req.user.sub;
       let data = await tasksService.create(req.body);
       return res.send(data);

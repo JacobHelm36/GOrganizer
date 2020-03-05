@@ -107,6 +107,7 @@ export default new Vuex.Store({
     async getLists({ commit, dispatch }, boardId) {
       let res = await api.get(`boards/${boardId}/lists`)
       commit('setLists', res.data)
+      console.log(res.data)
     },
     async createList({ commit, dispatch }, newList) {
       let res = await api.post(`lists`, newList)

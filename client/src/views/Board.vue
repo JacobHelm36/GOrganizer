@@ -7,10 +7,11 @@
         </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#"></a>
-            <a class="dropdown-item"><add-list :boardId="this.$route.params.boardId"/></a>
+            <a class="dropdown-item"></a>
             <a class="dropdown-item" @click="deleteBoard">Delete Board</a>
           </div>
         </div>
+            <add-list :boardId="this.$route.params.boardId"/>
         </span></h1>
       <h1 v-else>Loading...</h1>
       

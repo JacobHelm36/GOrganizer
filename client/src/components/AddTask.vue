@@ -45,9 +45,7 @@ export default {
   data() {
     return {
       newTask: {
-        listsId: this.listId,
-        //creatorEmail: user.creatorEmail
-        //possibly creator email
+        listsId: this.listId
       }
     };
   },

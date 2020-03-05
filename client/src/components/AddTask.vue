@@ -40,13 +40,13 @@
 import listId from "../components/List";
 export default {
   mounted() {
-    console.log(this.newTask.listsId);
   },
   name: "AddTask",
   data() {
     return {
       newTask: {
         listsId: this.listId,
+        //creatorEmail: user.creatorEmail
         //possibly creator email
       }
     };

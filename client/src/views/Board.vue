@@ -14,7 +14,6 @@
         </span></h1>
       <h1 v-else>Loading...</h1>
       <add-list :boardId="this.$route.params.boardId"/>
-    <!-- import lists -->
     <div class="lists">
       <list v-for="listObj in lists" :key="listObj._id" :listData="listObj" />
     </div>

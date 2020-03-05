@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       newTask: {
-        listsId: this.listId
+        listId: this.listId
       }
     };
   },
@@ -53,7 +53,7 @@ export default {
   methods: {
     createTask() {
       console.log(this.newTask.title)
-      console.log(this.newTask.listsId)
+      console.log(this.newTask.listId)
       this.$store.dispatch("createTask", this.newTask);
     }
   },

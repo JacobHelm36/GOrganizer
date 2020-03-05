@@ -17,7 +17,7 @@
       <div class="row justify-content-center">
         <div class="col-12">
           <button class="btn btn-danger btn-fixer" @click="deleteList">Delete List</button>
-          <add-task :listId="listData._id" @click="createTask" />
+          <add-task :listId="listData._id" />
         </div>
       </div>
     </div>
@@ -65,9 +65,6 @@ export default {
       this.$store.dispatch("editListById", data);
       console.log(this.listData._id);
     },
-    createTask(){
-      this.$store.dispatch("createTask", this.taskObj.title)
-    }
   }
 };
 </script>

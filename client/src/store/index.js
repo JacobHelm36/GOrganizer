@@ -52,8 +52,8 @@ export default new Vuex.Store({
     setTasks(state, data) {
       Vue.set(state.tasks, data.listId, data.resData);
     },
-    addTasks(state, tasks) {
-      state.tasks.push(tasks)
+    addTasks(state, task) {
+      state.tasks[task.listId].push(task)
     }
 
   },
@@ -138,6 +138,7 @@ export default new Vuex.Store({
       commit("setTasks", data)
     },
     async createTask({commit, dispatch}, newTask) {
+      debugger
       let res = await api.post('tasks', newTask)
       commit("addTasks", res.data)
     }

@@ -6,15 +6,15 @@
       data-toggle="modal"
       data-target="#task-creator"
     >create task</button>
-    <div class="modal" tabindex="-1" role="dialog" id="task-creator" @submit.prevent="createtask">
+    <div class="modal" tabindex="-1" role="dialog" id="task-creator" @submit.prevent="createTask">
       <div class="modal-dialog" role="document">
         <form action>
           <div class="modal-content form-group rounded input-group-default">
             <div class="modal-header d-flex flex-column">
-              <h2>Title</h2>
+              <h2>Task</h2>
               <input
                 class="modal-title rounded form-control"
-                placeholder="What's next?"
+                placeholder="What tasks do you have?"
                 aria-describedby="inputGroup-sizing-default"
                 v-model="newTask.title"
               />
@@ -40,19 +40,22 @@
 import listId from "../components/List";
 export default {
   mounted() {
-    console.log(this.newTask);
+    console.log(this.newTask.listsId);
   },
-  name: "Addtask",
+  name: "AddTask",
   data() {
     return {
       newTask: {
-        listId: this.listId
+        listsId: this.listId,
+        //possibly creator email
       }
     };
   },
   computed: {},
   methods: {
-    createtask() {
+    createTask() {
+      console.log(this.newTask.title)
+      console.log(this.newTask.listsId)
       this.$store.dispatch("createTask", this.newTask);
     }
   },

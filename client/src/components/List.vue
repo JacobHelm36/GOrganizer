@@ -17,7 +17,7 @@
       <div class="row justify-content-center">
         <div class="col-12">
           <button class="btn btn-danger btn-fixer" @click="deleteList">Delete List</button>
-          <button class="btn btn-primary" @click="createTask">+</button>
+          <add-task :listId="listData._id" @click="createTask" />
         </div>
       </div>
     </div>
@@ -27,6 +27,7 @@
 
 <script>
 import Task from "./Task";
+import addTask from "./AddTask";
 export default {
   mounted() {
     this.$store.dispatch("getTasks", this.listData._id);
@@ -43,7 +44,8 @@ export default {
   },
   props: ["listData"],
   components: {
-    Task
+    Task,
+    addTask
   },
   methods: {
     addList() {

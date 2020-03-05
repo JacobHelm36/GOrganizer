@@ -40,7 +40,6 @@
 import boardId from "../views/Board";
 export default {
   mounted() {
-    console.log(this.newList);
   },
   name: "AddList",
   data() {

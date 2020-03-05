@@ -4,9 +4,15 @@
       type="button"
       class="btn btn-primary"
       data-toggle="modal"
-      data-target="#task-creator"
+      :data-target="'#task-creator'+listId"
     >create task</button>
-    <div class="modal" tabindex="-1" role="dialog" id="task-creator" @submit.prevent="createTask">
+    <div
+      class="modal"
+      tabindex="-1"
+      role="dialog"
+      :id="'task-creator'+listId"
+      @submit.prevent="createTask"
+    >
       <div class="modal-dialog" role="document">
         <form action>
           <div class="modal-content form-group rounded input-group-default">
@@ -14,7 +20,7 @@
               <h2>Task</h2>
               <input
                 class="modal-title rounded form-control"
-                placeholder="What tasks do you have?"
+                :placeholder="listId"
                 aria-describedby="inputGroup-sizing-default"
                 v-model="newTask.title"
               />
@@ -24,7 +30,7 @@
                 type="submit"
                 class="btn btn-primary"
                 data-toggle="modal"
-                data-target="#task-creator"
+                :data-target="'#task-creator'+listId"
               >Submit</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
@@ -37,10 +43,8 @@
 
 
 <script>
-import listId from "../components/List";
 export default {
-  mounted() {
-  },
+  mounted() {},
   name: "AddTask",
   data() {
     return {
@@ -52,8 +56,6 @@ export default {
   computed: {},
   methods: {
     createTask() {
-      console.log(this.newTask.title)
-      console.log(this.newTask.listId)
       this.$store.dispatch("createTask", this.newTask);
     }
   },

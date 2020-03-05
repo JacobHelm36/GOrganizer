@@ -17,7 +17,8 @@
       <div class="row justify-content-center">
         <div class="col-12">
           <button class="btn btn-danger btn-fixer" @click="deleteList">Delete List</button>
-          <add-task :listId="listData._id" />
+          <p>{{listData._id}}</p>
+          <add-task :listId="listData.id" />
         </div>
       </div>
     </div>
@@ -30,12 +31,13 @@ import Task from "./Task";
 import addTask from "./AddTask";
 export default {
   mounted() {
-    console.log(this.listData)
+    console.log(this.listData);
     this.$store.dispatch("getTasks", this.listData._id);
   },
   data() {
     return {
-      title: this.listData.title
+      title: this.listData.title,
+      listID: this.listData._id
     };
   },
   computed: {
@@ -64,7 +66,7 @@ export default {
       };
       this.$store.dispatch("editListById", data);
       console.log(this.listData._id);
-    },
+    }
   }
 };
 </script>

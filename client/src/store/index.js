@@ -54,6 +54,9 @@ export default new Vuex.Store({
     },
     addTasks(state, task) {
       state.tasks[task.listId].push(task)
+    },
+    removeTask(state, id) {
+
     }
 
   },
@@ -95,7 +98,7 @@ export default new Vuex.Store({
         .then(serverBoard => {
           dispatch('getBoards')
         })
-      },
+    },
     async deleteBoardById({ commit }, boardId) {
       let res = await api.delete(`boards/${boardId}`)
       router.push({ name: "boards" })
@@ -137,10 +140,13 @@ export default new Vuex.Store({
       }
       commit("setTasks", data)
     },
-    async createTask({commit, dispatch}, newTask) {
-      debugger
+    async createTask({ commit, dispatch }, newTask) {
       let res = await api.post('tasks', newTask)
       commit("addTasks", res.data)
+    },
+    async deleteTask({ commit, dispatch }, taskId) {
+      let res = await api.delete('tasks', taskId)
+      commit("removeTask", res.data)
     }
     //#endregion
 

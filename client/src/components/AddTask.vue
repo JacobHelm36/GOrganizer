@@ -17,10 +17,10 @@
         <form action>
           <div class="modal-content form-group rounded input-group-default">
             <div class="modal-header d-flex flex-column">
-              <h2>Task</h2>
+              <h2>Create task</h2>
               <input
                 class="modal-title rounded form-control"
-                :placeholder="listId"
+                placeholder="What next?"
                 aria-describedby="inputGroup-sizing-default"
                 v-model="newTask.title"
               />

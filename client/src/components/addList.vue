@@ -11,10 +11,10 @@
         <form action>
           <div class="modal-content form-group rounded input-group-default">
             <div class="modal-header d-flex flex-column">
-              <h2>Title</h2>
+              <h2>Add a list</h2>
               <input
                 class="modal-title rounded form-control"
-                placeholder="What's next?"
+                placeholder="Let's get organized"
                 aria-describedby="inputGroup-sizing-default"
                 v-model="newList.title"
               />

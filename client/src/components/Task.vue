@@ -22,7 +22,7 @@
         </div>
       </div>
       <form @submit.prevent="createComment">
-        <input class="col-9 my-3" type="text" v-model="newComment.body" /> <button type="submit"><i class="fas fa-comment-alt text-primary"></i></button>
+        <input class="col-9 my-3" type="text" placeholder="No comment?" v-model="newComment.body" /> <button type="submit"><i class="fas fa-comment-alt text-primary"></i></button>
       </form>
     </div>
   </div>

@@ -2,7 +2,7 @@
   <div class="component">
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-primary btn-fixer"
       data-toggle="modal"
       :data-target="'#task-creator'+listId"
     >create task</button>
@@ -49,7 +49,8 @@ export default {
   data() {
     return {
       newTask: {
-        listId: this.listId
+        listId: this.listId,
+        boardId: this.boardId
       }
     };
   },
@@ -59,13 +60,17 @@ export default {
       this.$store.dispatch("createTask", this.newTask);
     }
   },
-  props: ["listId"],
+  props: ["listId", "boardId"],
   components: {}
 };
 </script>
 
 
 <style scoped>
+.btn-fixer {
+  margin: 2px 1px 2px 1px;
+  font-size: 12px;
+}
 div.modal-content {
   background-color: #f7f4f3;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",

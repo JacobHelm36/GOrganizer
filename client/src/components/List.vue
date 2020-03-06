@@ -20,9 +20,11 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-12">
+        <div class="col-6">
           <button class="btn btn-danger btn-fixer" @click="deleteList">Delete List</button>
-          <add-task :listId="listData.id" />
+        </div>
+        <div class="col-6">
+          <add-task :listId="listData.id" :boardId="listData.boardId" />
         </div>
       </div>
     </div>
@@ -40,7 +42,8 @@ export default {
   data() {
     return {
       title: this.listData.title,
-      listID: this.listData._id
+      listID: this.listData._id,
+
     };
   },
   computed: {
@@ -95,9 +98,7 @@ export default {
 <style scoped>
 .btn-fixer {
   margin: 2px 1px 2px 1px;
-  display: inline-block;
   font-size: 12px;
-  cursor: pointer;
 }
 .list {
   width: 17rem;

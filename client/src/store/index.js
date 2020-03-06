@@ -177,7 +177,7 @@ export default new Vuex.Store({
       dispatch("getTasks", res.data.listId)
     },
 
-    async removeComment({ commit, dipatch }, comment) {
+    async removeComment({ commit }, comment) {
       let res = await api.delete(`tasks/${comment.taskId}/comment/${comment._id}`);
       commit("removeComment", comment)
     },

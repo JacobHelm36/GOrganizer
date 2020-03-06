@@ -17,13 +17,12 @@
       <div class="row justify-content-center">
         <div class="col-12">
           <button class="btn btn-danger btn-fixer" @click="deleteList">Delete List</button>
-          <p>{{listData._id}}</p>
           <add-task :listId="listData.id" />
         </div>
       </div>
     </div>
   </div>
-  <!-- the edit button functionality @click="editList" -->
+  <!-- add a sweetalert to the delete function -->
 </template>
 
 <script>

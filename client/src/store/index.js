@@ -58,6 +58,10 @@ export default new Vuex.Store({
     removeTask(state, data) {
       let newArr = state.tasks[data.listId].filter(t => t.id != data.id);
       state.tasks[data.listId] = newArr;
+    },
+    addComment(state, comment) {
+      let task = state.tasks[comment.listId].find(t=> t._id == comment.taskId)
+      task.comments.push(comment)
     }
 
   },
@@ -149,6 +153,14 @@ export default new Vuex.Store({
       console.log(data.id)
       let res = await api.delete(`tasks/${data.id}`)
       commit("removeTask", res.data)
+    },
+    // end of Tasks
+
+    // Start of COMMENTS
+
+    async addComment({ commit}, newComment) {
+      let res = await api.post(`/${newComment.taskId}/comments`)
+      commit("addComment", res.data)
     }
     //#endregion
 

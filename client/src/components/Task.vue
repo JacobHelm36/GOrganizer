@@ -6,26 +6,38 @@
         <i class="far fa-minus-square text-white" @click="removeTask"></i>
       </p>
     </div>
-    <div
-      class="comments-drop"
-      v-if="showComments"
-      v-for="comment in taskData.comments"
-      :key="comment._id"
-    >
-      <p>{{comment.body}}</p>
-      <i>{{comment.author}}</i>
-      <br />
+    <div class="comments-drop" v-if="showComments">
+      <form>
+      <input v-model="commentTitle"/><i class="far fa-plus-square" @click.prevent="addComment"></i>
+      </form>
+      <div
+        v-for="comment in taskData.comments"
+        :key="comment._id"
+      >
+        <p>{{comment.body}}</p>
+        <i>{{comment.author}}</i>
+        <br />
+      </div>
     </div>
   </div>
+  <!-- draggable=true v-on:dragstart.capture="moving" v-on:dragend="dropped" -->
 </template>
 
 <script>
 export default {
   name: "Task",
   props: ["taskData"],
+  mounted(){
+    let newComment = {}
+  },
+  data(){
+    return {
+    }
+  },
   methods: {
     toggleComments() {
       this.showComments = !this.showComments;
+      console.log(this.newComment.taskId)
     },
     removeTask() {
       let data = {
@@ -33,11 +45,21 @@ export default {
         id: this.taskData._id
       };
       this.$store.dispatch("deleteTask", data);
+    },
+    addComment(){
+      newComment={
+        title: this.commentTitle,
+        taskId: this.taskData.id,
+        listId: this.taskData.listId
+      }
+      console.log(newComment)
+      debugger
+      this.$store.dispatch("addComment", newComment)
     }
   },
   data() {
     return {
-      showComments: true
+      showComments: false
     };
   }
 };

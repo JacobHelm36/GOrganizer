@@ -1,6 +1,11 @@
 <template>
   <!-- this is where tasks would show up 50% of the time -->
-  <div class="m-2 list">
+  <div
+    class="list m-2"
+    droppable="true"
+    v-on:drop.capture="dropTask"
+    ondragover="event.preventDefault()"
+  >
     <div class="card bg-light py-3">
       <strong
         class="card-top"
@@ -63,6 +68,25 @@ export default {
         id: this.listData._id
       };
       this.$store.dispatch("editListById", data);
+    },
+    dropTask(event) {
+      //get the item off of the event storage
+      let task = JSON.parse(event.dataTransfer.getData("data"));
+      //get the starting location off of the event storage
+      let from = event.dataTransfer.getData("from");
+      //add the item to the room's items
+
+      let data = {
+        from: from,
+        listId: this.listData._id,
+        task: task
+      };
+
+      if (data.listId != from) {
+        this.$store.dispatch("changeTaskListId", data);
+        //otherwise remove it from its previous room
+        this.$store.commit("transferTask", data);
+      }
     }
   }
 };

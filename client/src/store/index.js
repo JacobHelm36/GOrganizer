@@ -58,17 +58,22 @@ export default new Vuex.Store({
       let newArr = state.tasks[data.listId].filter(t => t.id != data.id);
       state.tasks[data.listId] = newArr;
     },
-    createComment(state, comment) {
-      let newcomment = {
-        body: comment.body,
-        creatorEmail: state.user.email
-      }
-      let task = state.tasks[comment.listId].find(t=> t._id == comment.taskId)
-      task.comments.push(newcomment)
+    // createComment(state, task) {
+    //   let comment = task.comments.find(c => c._id == )
+    //   let newcomment = {
+    //     body: comment.body,
+    //     creatorEmail: state.user.email
+    //   }
+    //   task.comments.push(newcomment)
+    // },
+    removeComment(state, comment) {
+      let task = state.tasks[comment.listId].find(t => t._id == comment.taskId);
+      task.comments = task.comments.filter(c => c._id != comment._id)
     },
-    removeComment(state, comment){
-      let task = state.tasks[comment.listId].find(t=> t._id == comment.taskId);
-      task.comments = task.comments.filter(c=>c._id != comment._id)
+    transferTask(state, data) {
+      data.task.listId = data.listId;
+      state.tasks[data.listId].push(data.task);
+      state.tasks[data.from] = state.tasks[data.from].filter(t => t._id != data.task._id)
     }
 
   },
@@ -125,7 +130,7 @@ export default new Vuex.Store({
     },
     async createList({ commit, dispatch }, newList) {
       let res = await api.post(`lists`, newList)
-      commit("addList", newList)
+      commit("addList", res.data)
     },
     async deleteList({ commit }, listId) {
       let res = await api.delete(`lists/${listId}`)
@@ -162,16 +167,24 @@ export default new Vuex.Store({
 
     // Start of COMMENTS
 
-    async createComment({ commit}, newComment) {
+    async createComment({ commit, dispatch }, newComment) {
       let data = {
         body: newComment.body
       }
       let res = await api.post(`tasks/${newComment.taskId}/comment`, data)
-      commit("createComment", newComment)
+
+      // commit("createComment", res.data)
+      dispatch("getTasks", res.data.listId)
     },
-    async removeComment({commit, dipatch}, comment){
+
+    async removeComment({ commit, dipatch }, comment) {
       let res = await api.delete(`tasks/${comment.taskId}/comment/${comment._id}`);
       commit("removeComment", comment)
+    },
+
+    async changeTaskListId({ commit, dispatch }, data) {
+      // debugger
+      let res = await api.put(`tasks/${data.task._id}`, { listId: data.listId });
     }
     //#endregion
 

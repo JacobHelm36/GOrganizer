@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 task">
+  <div class="col-12 task" draggable="true" v-on:dragstart.capture="moving" v-on:dragend="dropped">
     <div class="bg-primary text-white" @click="toggleComments">
       <p class="px-2 task-content">
         <strong>{{taskData.title}}</strong>
@@ -67,6 +67,15 @@ export default {
         listId: this.taskData.listId
       };
       this.$store.dispatch("removeComment", data);
+    },
+    moving(event) {
+      let from = this.taskData.listId;
+      event.dataTransfer.setData("data", JSON.stringify(this.taskData));
+      event.dataTransfer.setData("from", from);
+      console.log("moving");
+    },
+    dropped() {
+      console.log("the item has dropped");
     }
   },
   props: ["taskData"]

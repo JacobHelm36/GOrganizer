@@ -19,7 +19,8 @@ export default new Vuex.Store({
     user: {},
     boards: [],
     activeBoard: {},
-    lists: []
+    lists: [],
+    tasks: {}
   },
   mutations: {
     setUser(state, user) {
@@ -30,7 +31,46 @@ export default new Vuex.Store({
     },
     setActiveBoard(state, activeBoard) {
       state.activeBoard = activeBoard
+    },
+    editBoard(state, boardEdit) {
+      state.activeBoard = boardEdit
+    },
+    setLists(state, lists) {
+      state.lists = lists
+    },
+    editLists(state, list) {
+      let oldList = state.lists.find(l => l._id == list.id);
+      oldList = list
+    },
+    addList(state, lists) {
+      state.lists.push(lists)
+    },
+    deleteList(state, listId) {
+      state.lists = state.lists.filter(el => el._id != listId)
+    },
+    setTasks(state, data) {
+      Vue.set(state.tasks, data.listId, data.resData);
+    },
+    addTasks(state, task) {
+      state.tasks[task.listId].push(task)
+    },
+    removeTask(state, data) {
+      let newArr = state.tasks[data.listId].filter(t => t.id != data.id);
+      state.tasks[data.listId] = newArr;
+    },
+    createComment(state, comment) {
+      let newcomment = {
+        body: comment.body,
+        creatorEmail: state.user.email
+      }
+      let task = state.tasks[comment.listId].find(t=> t._id == comment.taskId)
+      task.comments.push(newcomment)
+    },
+    removeComment(state, comment){
+      let task = state.tasks[comment.listId].find(t=> t._id == comment.taskId);
+      task.comments = task.comments.filter(c=>c._id != comment._id)
     }
+
   },
   actions: {
     //#region -- AUTH STUFF --
@@ -53,21 +93,85 @@ export default new Vuex.Store({
 
     //#region -- BOARDS --
 
-    async setActiveBoard({ commit }, boardId){
+    async setActiveBoard({ commit }, boardId) {
       let res = await api.get(`boards/${boardId}`)
       commit("setActiveBoard", res.data)
     },
-    getBoards({ commit, dispatch }) {
-      api.get('boards')
-        .then(res => {
-          commit('setBoards', res.data)
-        })
+    async getBoards({ commit, dispatch }) {
+      let res = await api.get('boards')
+      commit('setBoards', res.data)
+    },
+    async editBoardById({ commit, dispatch }, boardId) {
+      let res = await api.put(`boards/${boardId}`)
+      commit("editBoard", res.data)
     },
     addBoard({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
           dispatch('getBoards')
         })
+    },
+    async deleteBoardById({ commit }, boardId) {
+      let res = await api.delete(`boards/${boardId}`)
+      router.push({ name: "boards" })
+      return res
+    },
+    // End of BOARDS
+
+    // Start of LISTS
+    async getLists({ commit, dispatch }, boardId) {
+      let res = await api.get(`boards/${boardId}/lists`)
+      commit('setLists', res.data)
+    },
+    async createList({ commit, dispatch }, newList) {
+      let res = await api.post(`lists`, newList)
+      commit("addList", newList)
+    },
+    async deleteList({ commit }, listId) {
+      let res = await api.delete(`lists/${listId}`)
+      commit("deleteList", listId)
+      return res
+    },
+    async editListById({ commit }, data) {
+      let update = {
+        title: data.title
+      }
+      let res = await api.put(`lists/${data.id}`, update)
+      commit("editLists", res.data)
+    },
+    // End of LISTS
+
+    // Start of TASKS
+    async getTasks({ commit, dispatch }, listId) {
+      let res = await api.get(`lists/${listId}/tasks`)
+      let data = {
+        listId: listId,
+        resData: res.data
+      }
+      commit("setTasks", data)
+    },
+    async createTask({ commit, dispatch }, newTask) {
+      let res = await api.post('tasks', newTask)
+      commit("addTasks", res.data)
+    },
+    async removeTask({ commit, dispatch }, data) {
+      let res = await api.delete(`tasks/${data.id}`)
+      commit("removeTask", res.data)
+    },
+    // end of Tasks
+
+    // Start of COMMENTS
+
+    async createComment({ commit}, newComment) {
+      let data = {
+        body: newComment.body
+      }
+      let res = await api.post(`tasks/${newComment.taskId}/comment`, data)
+      commit("createComment", newComment)
+    },
+    async removeComment({commit, dipatch}, comment){
+      let res = await api.delete(`tasks/${comment.taskId}/comment/${comment._id}`);
+      commit("removeComment", comment)
     }
     //#endregion
 

@@ -40,7 +40,6 @@ export default new Vuex.Store({
     },
     editLists(state, list) {
       let oldList = state.lists.find(l => l._id == list.id);
-      console.log(oldList)
       oldList = list
     },
     addList(state, lists) {
@@ -123,11 +122,9 @@ export default new Vuex.Store({
     async getLists({ commit, dispatch }, boardId) {
       let res = await api.get(`boards/${boardId}/lists`)
       commit('setLists', res.data)
-      console.log(res.data)
     },
     async createList({ commit, dispatch }, newList) {
       let res = await api.post(`lists`, newList)
-      console.log(res)
       commit("addList", newList)
     },
     async deleteList({ commit }, listId) {

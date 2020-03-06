@@ -30,7 +30,6 @@ import Task from "./Task";
 import addTask from "./AddTask";
 export default {
   mounted() {
-    console.log(this.listData);
     this.$store.dispatch("getTasks", this.listData._id);
   },
   data() {
@@ -64,7 +63,6 @@ export default {
         id: this.listData._id
       };
       this.$store.dispatch("editListById", data);
-      console.log(this.listData._id);
     }
   }
 };

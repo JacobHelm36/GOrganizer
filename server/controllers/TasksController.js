@@ -30,6 +30,8 @@ export class TasksController extends BaseController {
   }
 
   async addComment(req, res, next) {
+    req.body.creatorEmail = req.userInfo.email;
+    req.body.creatorId = req.user.sub;
     let data = await tasksService.addComment(req.params.id, req.body);
     return res.send(data)
   }

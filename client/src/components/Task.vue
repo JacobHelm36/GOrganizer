@@ -6,18 +6,24 @@
         <i class="far fa-minus-square text-white" @click="removeTask"></i>
       </p>
     </div>
-    <div class="comments-drop" v-if="showComments">
-      <form>
-      <input v-model="commentTitle"/><i class="far fa-plus-square" @click.prevent="addComment"></i>
-      </form>
-      <div
+    <div class="comments-drop row" v-if="showComments">
+      <div class="comments-view col-12 mx-1">
+        <div
+        class="single-comment my-2 row"
         v-for="comment in taskData.comments"
         :key="comment._id"
-      >
-        <p>{{comment.body}}</p>
-        <i>{{comment.author}}</i>
-        <br />
+        >
+          <div class="col-9"></div><i class="col fas fa-times delete-comment" @click="removeComment(comment._id)"></i>
+          <p class="col-12">
+            {{comment.body}} <br/>
+            <i class="signature">~ {{comment.creatorEmail}}</i>
+          </p>
+
+        </div>
       </div>
+      <form @submit.prevent="createComment">
+        <input class="col-9 my-3" type="text" v-model="newComment.body" /> <button type="submit"><i class="fas fa-comment-alt text-primary"></i></button>
+      </form>
     </div>
   </div>
   <!-- draggable=true v-on:dragstart.capture="moving" v-on:dragend="dropped" -->
@@ -26,42 +32,40 @@
 <script>
 export default {
   name: "Task",
-  props: ["taskData"],
-  mounted(){
-    let newComment = {}
-  },
-  data(){
-    return {
-    }
-  },
+  mounted(){},
+      data() {
+        return {
+          showComments: false,
+          newComment: {
+            taskId: this.taskData._id,
+            listId: this.taskData.listId
+            }
+        };
+      },
   methods: {
     toggleComments() {
       this.showComments = !this.showComments;
-      console.log(this.newComment.taskId)
     },
     removeTask() {
       let data = {
         listId: this.taskData.listId,
         id: this.taskData._id
       };
-      this.$store.dispatch("deleteTask", data);
+      this.$store.dispatch("removeTask", data);
     },
-    addComment(){
-      newComment={
-        title: this.commentTitle,
-        taskId: this.taskData.id,
+    createComment() {
+      this.$store.dispatch("createComment", this.newComment);
+    },
+    removeComment(id){
+      let data = {
+        _id: id,
+        taskId: this.taskData._id,
         listId: this.taskData.listId
       }
-      console.log(newComment)
-      debugger
-      this.$store.dispatch("addComment", newComment)
+      this.$store.dispatch("removeComment", data)
     }
   },
-  data() {
-    return {
-      showComments: false
-    };
-  }
+  props: ["taskData"],
 };
 </script>
 
@@ -77,4 +81,18 @@ export default {
 .task-content:hover i {
   display: block;
 }
+.comments-view{
+  height: 13rem;
+  overflow-y: auto;
+}
+.single-comment{
+  background-color: rgb(241, 235, 235);
+}
+.signature{
+  font-size: 12px;
+}
+.delete-comment{
+  cursor: pointer;
+}
+
 </style>

@@ -59,9 +59,17 @@ export default new Vuex.Store({
       let newArr = state.tasks[data.listId].filter(t => t.id != data.id);
       state.tasks[data.listId] = newArr;
     },
-    addComment(state, comment) {
+    createComment(state, comment) {
+      let newcomment = {
+        body: comment.body,
+        creatorEmail: state.user.email
+      }
       let task = state.tasks[comment.listId].find(t=> t._id == comment.taskId)
-      task.comments.push(comment)
+      task.comments.push(newcomment)
+    },
+    removeComment(state, comment){
+      let task = state.tasks[comment.listId].find(t=> t._id == comment.taskId);
+      task.comments = task.comments.filter(c=>c._id != comment._id)
     }
 
   },
@@ -149,8 +157,7 @@ export default new Vuex.Store({
       let res = await api.post('tasks', newTask)
       commit("addTasks", res.data)
     },
-    async deleteTask({ commit, dispatch }, data) {
-      console.log(data.id)
+    async removeTask({ commit, dispatch }, data) {
       let res = await api.delete(`tasks/${data.id}`)
       commit("removeTask", res.data)
     },
@@ -158,9 +165,16 @@ export default new Vuex.Store({
 
     // Start of COMMENTS
 
-    async addComment({ commit}, newComment) {
-      let res = await api.post(`/${newComment.taskId}/comments`)
-      commit("addComment", res.data)
+    async createComment({ commit}, newComment) {
+      let data = {
+        body: newComment.body
+      }
+      let res = await api.post(`tasks/${newComment.taskId}/comment`, data)
+      commit("createComment", newComment)
+    },
+    async removeComment({commit, dipatch}, comment){
+      let res = await api.delete(`tasks/${comment.taskId}/comment/${comment._id}`);
+      commit("removeComment", comment)
     }
     //#endregion
 

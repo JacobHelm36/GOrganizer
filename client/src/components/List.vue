@@ -78,7 +78,7 @@ export default {
   cursor: pointer;
 }
 .list {
-  width: 15rem;
+  width: 17rem;
 }
 .card {
   border-radius: 3%;

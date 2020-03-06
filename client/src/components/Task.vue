@@ -82,7 +82,7 @@ export default {
   display: block;
 }
 .comments-view{
-  height: 13rem;
+  max-height: 13rem;
   overflow-y: auto;
 }
 .single-comment{

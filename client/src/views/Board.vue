@@ -56,6 +56,9 @@ export default {
 };
 </script>
 <style>
+.board{
+  min-height: 100%;
+}
 .lists {
   display: flex;
   overflow-x: scroll;

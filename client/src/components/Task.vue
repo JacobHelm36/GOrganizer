@@ -65,6 +65,7 @@ export default {
         _id: id,
         taskId: this.taskData._id,
         listId: this.taskData.listId
+
       };
       this.$store.dispatch("removeComment", data);
     },

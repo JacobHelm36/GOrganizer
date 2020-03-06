@@ -9,20 +9,24 @@
     <div class="comments-drop row" v-if="showComments">
       <div class="comments-view col-12 mx-1">
         <div
-        class="single-comment my-2 row"
-        v-for="comment in taskData.comments"
-        :key="comment._id"
+          class="single-comment my-2 row"
+          v-for="comment in taskData.comments"
+          :key="comment._id"
         >
-          <div class="col-9"></div><i class="col fas fa-times delete-comment" @click="removeComment(comment._id)"></i>
+          <div class="col-9"></div>
+          <i class="col fas fa-times delete-comment" @click="removeComment(comment._id)"></i>
           <p class="col-12">
-            {{comment.body}} <br/>
+            {{comment.body}}
+            <br />
             <i class="signature">~ {{comment.creatorEmail}}</i>
           </p>
-
         </div>
       </div>
       <form @submit.prevent="createComment">
-        <input class="col-9 my-3" type="text" placeholder="No comment?" v-model="newComment.body" /> <button type="submit"><i class="fas fa-comment-alt text-primary"></i></button>
+        <input class="col-9 my-3" type="text" placeholder="No comment?" v-model="newComment.body" />
+        <button type="submit">
+          <i class="fas fa-comment-alt text-primary"></i>
+        </button>
       </form>
     </div>
   </div>
@@ -32,16 +36,16 @@
 <script>
 export default {
   name: "Task",
-  mounted(){},
-      data() {
-        return {
-          showComments: false,
-          newComment: {
-            taskId: this.taskData._id,
-            listId: this.taskData.listId
-            }
-        };
-      },
+  mounted() {},
+  data() {
+    return {
+      showComments: false,
+      newComment: {
+        taskId: this.taskData._id,
+        listId: this.taskData.listId
+      }
+    };
+  },
   methods: {
     toggleComments() {
       this.showComments = !this.showComments;
@@ -56,16 +60,16 @@ export default {
     createComment() {
       this.$store.dispatch("createComment", this.newComment);
     },
-    removeComment(id){
+    removeComment(id) {
       let data = {
         _id: id,
         taskId: this.taskData._id,
         listId: this.taskData.listId
-      }
-      this.$store.dispatch("removeComment", data)
+      };
+      this.$store.dispatch("removeComment", data);
     }
   },
-  props: ["taskData"],
+  props: ["taskData"]
 };
 </script>
 
@@ -81,18 +85,17 @@ export default {
 .task-content:hover i {
   display: block;
 }
-.comments-view{
+.comments-view {
   max-height: 13rem;
   overflow-y: auto;
 }
-.single-comment{
+.single-comment {
   background-color: rgb(241, 235, 235);
 }
-.signature{
+.signature {
   font-size: 12px;
 }
-.delete-comment{
+.delete-comment {
   cursor: pointer;
 }
-
 </style>

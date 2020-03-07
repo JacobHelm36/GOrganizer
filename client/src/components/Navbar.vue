@@ -50,7 +50,7 @@ export default {
     },
     async logout() {
       await this.$auth.logout({
-        returnTo: "/"
+        returnTo: window.location.href
       });
       this.$store.dispatch("resetBearer");
       this.$router.push({ name: "home" });
